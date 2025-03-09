@@ -37,5 +37,5 @@ jobs:
             - name: Build and Push to ECR
               run: |
                 docker build -t threat-composer-tool .
-                docker tag threat-composer-tool:latest 677276074604.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-tool:$GITHUB_RUN_ID
-                docker push 677276074604.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-tool:$GITHUB_RUN_ID
+                docker tag threat-composer-tool:latest 677276074604.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-tool:latest
+                docker push 677276074604.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-tool:latest
