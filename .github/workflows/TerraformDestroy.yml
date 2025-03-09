@@ -1,4 +1,4 @@
-name: Terraform
+name: Terraform Destroy
 
 # on:
 #     workflow_dispatch:
@@ -6,7 +6,7 @@ name: Terraform
 on:
     push:
         branches:
-            - test
+            - blahblahblah
 
 
 jobs:

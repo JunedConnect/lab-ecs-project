@@ -9,7 +9,7 @@ resource "aws_ecs_service" "TCD-Service" {
   launch_type                        = "FARGATE"
   platform_version                   = "LATEST"
   cluster                            = aws_ecs_cluster.TCT-Cluster.id
-  task_definition                    = aws_ecs_task_definition.TCD-TD.arn
+  task_definition                    = aws_ecs_task_definition.TCD-TD.id
   scheduling_strategy                = "REPLICA"
   desired_count                      = 1
 
