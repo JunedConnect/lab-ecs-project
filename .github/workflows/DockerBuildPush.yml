@@ -34,8 +34,8 @@ jobs:
               env:
                 aws-region: ${{ secrets.AWS_REGION }}
 
-            # - name: Build and Push to ECR
-            #   run: |
-            #     docker build -t threat-composer-tool .
-            #     docker tag threat-composer-tool:latest 677276074604.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-tool:${{ github.run_number }}
-            #     docker push 677276074604.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-tool:${{ github.run_number }}
+            - name: Build and Push to ECR
+              run: |
+                docker build -t threat-composer-tool .
+                docker tag threat-composer-tool:latest 677276074604.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-tool:$GITHUB_RUN_ID
+                docker push 677276074604.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-tool:$GITHUB_RUN_ID
