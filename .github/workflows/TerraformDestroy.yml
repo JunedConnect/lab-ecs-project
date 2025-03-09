@@ -33,5 +33,9 @@ jobs:
               with:
                 terraform_version: 1.11.1
 
+            - name: Terraform Init
+              run: terraform init
+  
+
             - name: Terraform Destory
               run: terraform destroy -auto-approve
