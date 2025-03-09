@@ -39,3 +39,5 @@ jobs:
                 docker build -t threat-composer-tool .
                 docker tag threat-composer-tool:latest 677276074604.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-tool:latest
                 docker push 677276074604.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-tool:latest
+
+        
