@@ -6,7 +6,7 @@ name: Terraform
 on:
     push:
         branches:
-            - Test
+            - test
 
 
 jobs:
