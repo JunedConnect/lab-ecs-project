@@ -1,12 +1,12 @@
 name: Terraform Apply
 
-on:
-    workflow_dispatch:
-
 # on:
-#     push:
-#         branches:
-#             - blahblahblah
+#     workflow_dispatch:
+
+on:
+    pull:
+        branches:
+            - test
 
 
 jobs:
