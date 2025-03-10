@@ -1,0 +1,7 @@
+services:
+
+  app:
+    build: ./app/
+    container_name: app_container
+    ports:
+      - 3000:3000

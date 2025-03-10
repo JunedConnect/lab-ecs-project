@@ -1,12 +1,12 @@
 name: Terraform Apply
 
-# on:
-#     workflow_dispatch:
-
 on:
-    push:
-        branches:
-            - blahblahblah
+    workflow_dispatch:
+
+# on:
+#     push:
+#         branches:
+#             - test
 
 
 jobs:
@@ -14,7 +14,7 @@ jobs:
         runs-on: ubuntu-latest
         defaults:
             run:
-                working-directory: "./My Terraform Files/"
+                working-directory: "./Terraform/"
         environment: aws
     
         steps:
