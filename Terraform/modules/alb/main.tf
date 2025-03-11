@@ -3,7 +3,7 @@
   internal           = false
   load_balancer_type = "application"
   security_groups    = [var.security_group_id]
-  subnets            = ["subnet-0967fd07e590e573d", "subnet-01c138da85041dd7e", "subnet-093f680cc56a25613"]
+  subnets            = var.subnets
 }
 
 

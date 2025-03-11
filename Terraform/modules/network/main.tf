@@ -1,6 +1,7 @@
 resource "aws_security_group" "LCT-SG" {
   name = "Threat-Composer-Tool-SG"
   description = "Allows Everything"
+  vpc_id = aws_vpc.vpc.id
 
  ingress {
    from_port   = 0
@@ -23,52 +24,66 @@ resource "aws_lb_target_group" "TCT-TG" {
   port        = "80"    #port 3000 or port 80 works here
   protocol    = "HTTP"
   target_type = "ip"
-  vpc_id      = "vpc-0574715ac95407694"
+  vpc_id      = aws_vpc.vpc.id
 }
 
 
-resource "aws_route53_zone" "my_hosted_zone" {
-  name = "tm.juned.co.uk"  # Replace with your actual hosted zone domain
+resource "aws_vpc" "vpc" {
+  cidr_block = "10.0.0.0/16"
 }
 
 
-resource "aws_acm_certificate" "cert" {
-  domain_name       = "tm.juned.co.uk"  # Replace with your actual domain
-  validation_method = "DNS"
+resource "aws_subnet" "subnet1" {
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = "10.0.1.0/24"
+  map_public_ip_on_launch = true
+  availability_zone       = "eu-west-2a"
 }
 
 
-resource "aws_route53_record" "cert_validation_record" {
-  for_each = {
-    for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => {
-      name   = dvo.resource_record_name
-      record = dvo.resource_record_value
-      type   = dvo.resource_record_type
-    }
+resource "aws_subnet" "subnet2" {
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = "10.0.2.0/24"
+  map_public_ip_on_launch = true
+  availability_zone       = "eu-west-2b"
+}
+
+
+resource "aws_subnet" "subnet3" {
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = "10.0.3.0/24"
+  map_public_ip_on_launch = true
+  availability_zone       = "eu-west-2c"
+}
+
+
+resource "aws_internet_gateway" "IG" {
+  vpc_id = aws_vpc.vpc.id
+}
+
+
+resource "aws_route_table" "RT" {
+  vpc_id = aws_vpc.vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.IG.id
   }
-
-  zone_id = aws_route53_zone.my_hosted_zone.zone_id
-  name    = each.value.name
-  records = [each.value.record]
-  type    = each.value.type
-  ttl     = 60
 }
 
 
-resource "aws_acm_certificate_validation" "cert_validation" {
-  certificate_arn         = aws_acm_certificate.cert.arn
-  validation_record_fqdns = [for record in aws_route53_record.cert_validation_record : record.fqdn]
+resource "aws_route_table_association" "RTA1" {
+  subnet_id      = aws_subnet.subnet1.id
+  route_table_id = aws_route_table.RT.id
 }
 
 
-resource "aws_route53_record" "alb_record" {
-  zone_id = aws_route53_zone.my_hosted_zone.zone_id
-  name    = "tm.juned.co.uk"
-  type    = "A"
+resource "aws_route_table_association" "RTA2" {
+  subnet_id      = aws_subnet.subnet2.id
+  route_table_id = aws_route_table.RT.id
+}
 
-  alias {
-    name                   = var.alb_dns_name  # ALB DNS Name
-    zone_id                = var.alb_zone_id   # ALB Hosted Zone ID
-    evaluate_target_health = true
-  }
+
+resource "aws_route_table_association" "RTA3" {
+  subnet_id      = aws_subnet.subnet3.id
+  route_table_id = aws_route_table.RT.id
 }

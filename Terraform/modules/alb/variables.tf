@@ -12,3 +12,8 @@ variable "certificate_arn" {
   description = "ARN of the ACM certificate for ALB"
   type        = string
 }
+
+variable "subnets" {
+  description = "List of subnet IDs where the ALB will be deployed"
+  type        = list(string)
+}
