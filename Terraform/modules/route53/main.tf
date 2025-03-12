@@ -1,11 +1,11 @@
 resource "aws_route53_zone" "my_hosted_zone" {
-  name = "tm.juned.co.uk"
+  name = var.domain_name
 }
 
 
 resource "aws_acm_certificate" "cert" {
-  domain_name       = "tm.juned.co.uk"
-  validation_method = "DNS"
+  domain_name       = var.domain_name
+  validation_method = var.validation_method
 }
 
 
@@ -22,7 +22,7 @@ resource "aws_route53_record" "cert_validation_record" {
   name    = each.value.name
   records = [each.value.record]
   type    = each.value.type
-  ttl     = 60
+  ttl     = var.dns_ttl
 }
 
 
@@ -34,7 +34,7 @@ resource "aws_acm_certificate_validation" "cert_validation" {
 
 resource "aws_route53_record" "alb_record" {
   zone_id = aws_route53_zone.my_hosted_zone.zone_id
-  name    = "tm.juned.co.uk"
+  name    = var.domain_name
   type    = "A"
 
   alias {
