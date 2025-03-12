@@ -1,12 +1,26 @@
 resource "aws_security_group" "LCT-SG" {
-  name = "Threat-Composer-Tool-SG"
-  description = "Allows Everything"
+  name = var.security_group_name
+  description = var.security_group_description
   vpc_id = aws_vpc.vpc.id
 
  ingress {
-   from_port   = 0
-   to_port     = 0
-   protocol    = -1
+   from_port   = 3000
+   to_port     = 3000
+   protocol    = "tcp"
+   cidr_blocks = ["0.0.0.0/0"]
+ }
+
+ ingress {
+   from_port   = 80
+   to_port     = 80
+   protocol    = "tcp"
+   cidr_blocks = ["0.0.0.0/0"]
+ }
+
+ ingress {
+   from_port   = 443
+   to_port     = 443
+   protocol    = "tcp"
    cidr_blocks = ["0.0.0.0/0"]
  }
 
@@ -20,40 +34,40 @@ resource "aws_security_group" "LCT-SG" {
 
 
 resource "aws_lb_target_group" "TCT-TG" {
-  name        = "Threat-Composer-Tool-TG"
-  port        = "80"    #port 3000 or port 80 works here
-  protocol    = "HTTP"
-  target_type = "ip"
+  name        = var.target_group_name
+  port        = var.target_group_port    #port 3000 or port 80 works here
+  protocol    = var.target_group_protocol
+  target_type = var.target_group_target_type
   vpc_id      = aws_vpc.vpc.id
 }
 
 
 resource "aws_vpc" "vpc" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = var.vpc_cidr_block
 }
 
 
 resource "aws_subnet" "subnet1" {
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = "10.0.1.0/24"
-  map_public_ip_on_launch = true
-  availability_zone       = "eu-west-2a"
+  cidr_block              = var.subnet1_cidr_block
+  map_public_ip_on_launch = var.subnet_map_public_ip_on_launch
+  availability_zone       = var.subnet1_availability_zone
 }
 
 
 resource "aws_subnet" "subnet2" {
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = "10.0.2.0/24"
-  map_public_ip_on_launch = true
-  availability_zone       = "eu-west-2b"
+  cidr_block              = var.subnet2_cidr_block
+  map_public_ip_on_launch = var.subnet_map_public_ip_on_launch
+  availability_zone       = var.subnet2_availability_zone
 }
 
 
 resource "aws_subnet" "subnet3" {
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = "10.0.3.0/24"
-  map_public_ip_on_launch = true
-  availability_zone       = "eu-west-2c"
+  cidr_block              = var.subnet3_cidr_block
+  map_public_ip_on_launch = var.subnet_map_public_ip_on_launch
+  availability_zone       = var.subnet3_availability_zone
 }
 
 
@@ -65,7 +79,7 @@ resource "aws_internet_gateway" "IG" {
 resource "aws_route_table" "RT" {
   vpc_id = aws_vpc.vpc.id
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block = var.route_cidr_block
     gateway_id = aws_internet_gateway.IG.id
   }
 }
