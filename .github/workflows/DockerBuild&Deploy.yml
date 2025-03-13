@@ -42,3 +42,26 @@ jobs:
                 docker build -t threat-composer-tool .
                 docker tag threat-composer-tool:latest ${{ secrets.AWS_REGISTRY }}/threat-composer-tool:latest
                 docker push ${{ secrets.AWS_REGISTRY }}/threat-composer-tool:latest
+
+            - name: Trivy Scan
+              uses: aquasecurity/trivy-action@master
+              with:
+                image-ref: ${{ secrets.AWS_REGISTRY }}/threat-composer-tool:latest
+                severity: 'CRITICAL,HIGH'
+                format: 'sarif'
+                output: 'trivy-results-Docker.sarif'
+                exit-code: 0
+              env:
+                AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+                AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+      
+            - name: Upload Trivy scan results to GitHub Security tab
+              uses: github/codeql-action/upload-sarif@v3
+              with:
+                sarif_file: 'trivy-results-Docker.sarif'
+                wait-for-processing: true
+
+            - name: Build and Push to ECR
+              run: |
+                docker push ${{ secrets.AWS_REGISTRY }}/threat-composer-tool:latest
