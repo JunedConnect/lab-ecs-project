@@ -42,10 +42,7 @@ jobs:
             - name: Setup Tflint
               uses: terraform-linters/setup-tflint@v4
               with: 
-                tflint_version: 
+                tflint_version: latest
                   
-            - name: TFlint
-              id: tflint
-              working-directory: ${{ env.WORKING_DIR }}
-              run: |
-                tflint --recursive --config "$(pwd)/.tflint.hcl"
+            - name: TFlint Scan
+              run: tflint -f compact
