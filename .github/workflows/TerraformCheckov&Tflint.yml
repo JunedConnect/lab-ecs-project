@@ -42,7 +42,11 @@ jobs:
             - name: Setup Tflint
               uses: terraform-linters/setup-tflint@v4
               with: 
-                tflint_version: latest
+                tflint_version: 
+                  
+            - name: Init TFLint
+              run: tflint --init
+            
             
             - name: TFLint Scan
               run: tflint -f compact
