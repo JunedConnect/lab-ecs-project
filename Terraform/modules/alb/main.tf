@@ -30,7 +30,7 @@ resource "aws_alb_listener" "ListenerSSL" {
   certificate_arn = var.certificate_arn
    
   default_action {
-    target_group_arn = var.target_group_id
+    target_group_arn = var.target_group_idabcd
     type             = "forward"
   }
 }
