@@ -1,7 +1,7 @@
 name: Terraform Destroy
 
 on:
-    workflow_dispatch:
+  workflow_dispatch:
 
 # on:
 #     push:
@@ -10,7 +10,7 @@ on:
 
 
 jobs:
-    terraform:
+    terraformdestroy:
         runs-on: ubuntu-latest
         defaults:
             run:

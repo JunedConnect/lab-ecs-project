@@ -1,0 +1,37 @@
+name: Docker Trivy Scan
+
+# on:
+#   workflow_dispatch:
+
+on:
+    push:
+        branches:
+            - main
+
+
+jobs:
+    TrivyScan:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              
+            - name: Trivy Scan
+              uses: aquasecurity/trivy-action@master
+              with:
+                image-ref: ${{ secrets.AWS_REGISTRY }}/threat-composer-tool:latest
+                severity: 'CRITICAL,HIGH'
+                format: 'sarif'
+                output: 'trivy-results-Docker.sarif'
+#                limit-severities-for-sarif: True
+#                exit-code: 0
+              env:
+                AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+                AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+    
+            - name: Upload Trivy scan results to GitHub Security tab
+              uses: github/codeql-action/upload-sarif@v3
+              with:
+                sarif_file: 'trivy-results-Docker.sarif'
+                wait-for-processing: true

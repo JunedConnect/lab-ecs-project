@@ -1,7 +1,7 @@
 name: Terraform Apply
 
 on:
-    workflow_dispatch:
+  workflow_dispatch:
 
 # on:
 #     push:
@@ -10,7 +10,7 @@ on:
 
 
 jobs:
-    terraform:
+    terraformapply:
         runs-on: ubuntu-latest
         defaults:
             run:
@@ -35,9 +35,6 @@ jobs:
 
             - name: Terraform Init
               run: terraform init
-
-            - name: Terraform Validate
-              run: terraform validate
 
             - name: Terraform Apply
               run: terraform apply -auto-approve
