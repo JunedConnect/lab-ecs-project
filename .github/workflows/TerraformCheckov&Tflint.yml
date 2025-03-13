@@ -40,8 +40,6 @@ jobs:
             
             - name: Setup Tflint
               uses: terraform-linters/setup-tflint@v4
-              with: 
-                tflint_version: latest
-                  
+
             - name: TFlint Scan
               run: tflint
