@@ -16,6 +16,9 @@ jobs:
             run:
                 working-directory: "./Terraform/"
         environment: aws
+        permissions:
+          contents: read # for actions/checkout to fetch code
+          security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
     
         steps:
             - name: Checkout
@@ -25,11 +28,11 @@ jobs:
               uses: bridgecrewio/checkov-action@master
               with:
                 output_format: cli,sarif
-                output_file_path: console,results.sarif
+                output_file_path: checkov-results-terraform.sarif
               
             - name: Upload SARIF file
               uses: github/codeql-action/upload-sarif@v3
               if: success() || failure()
               with:
-                sarif_file: 'trivy-results-Docker.sarif'
+                sarif_file: 'checkov-results-terraform.sarif'
                 wait-for-processing: true
