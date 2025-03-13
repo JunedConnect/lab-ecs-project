@@ -44,9 +44,8 @@ jobs:
               with: 
                 tflint_version: 
                   
-            - name: Init TFLint
-              run: tflint --init
-            
-            
-            - name: TFLint Scan
-              run: tflint -f compact
+            - name: TFlint
+              id: tflint
+              working-directory: ${{ env.WORKING_DIR }}
+              run: |
+                tflint --recursive --config "$(pwd)/.tflint.hcl"
