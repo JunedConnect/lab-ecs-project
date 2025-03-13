@@ -27,7 +27,6 @@ jobs:
               uses: bridgecrewio/checkov-action@master
               with:
                 framework: terraform
-                skip_check: CKV2_GHA_1
                 soft_fail: false
                 output_format: cli,sarif
                 output_file_path: checkov-results-terraform.sarif
@@ -45,4 +44,4 @@ jobs:
                 tflint_version: latest
                   
             - name: TFlint Scan
-              run: tflint -f compact
+              run: tflint
