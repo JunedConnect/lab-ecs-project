@@ -29,7 +29,9 @@ jobs:
                 tflint_version: latest
 
             - name: TFlint Scan
-              run: tflint -f compact
+              run: |
+                tflint --init
+                tflint --recursive
 
             - name: Checkov GitHub Action
               uses: bridgecrewio/checkov-action@master
