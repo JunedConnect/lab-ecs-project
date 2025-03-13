@@ -38,3 +38,11 @@ jobs:
               with:
                 sarif_file: 'checkov-results-terraform.sarif'
                 wait-for-processing: true
+            
+            - name: Setup Tflint
+              uses: terraform-linters/setup-tflint@v4
+              with: 
+                tflint_version: latest
+            
+            - name: TFLint Scan
+              run: tflint -f compact
