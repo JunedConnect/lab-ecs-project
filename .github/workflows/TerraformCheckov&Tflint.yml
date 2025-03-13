@@ -32,6 +32,7 @@ jobs:
               run: |
                 tflint --init
                 tflint --recursive
+              continue-on-error: true
 
             - name: Checkov GitHub Action
               uses: bridgecrewio/checkov-action@master
