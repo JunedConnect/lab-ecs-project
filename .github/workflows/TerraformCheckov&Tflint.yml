@@ -27,10 +27,10 @@ jobs:
               with: 
                 tflint_version: latest
 
-            - name: TFlint Scan
+            - name: TFlint Scan   #See this link for command flags https://github.com/terraform-linters/tflint
               run: |
                 tflint --init
-                tflint --recursive --format sarif --output tflint-results-terraform.sarif
+                tflint --recursive -f sarif > tflint-results-terraform.sarif
               continue-on-error: true
 
             - name: Upload TFLint scan results to GitHub Security tab
