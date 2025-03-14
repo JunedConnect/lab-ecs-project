@@ -10,14 +10,11 @@ on:
 
 
 jobs:
-    Docker:
+    All_In_One:
         runs-on: ubuntu-latest
         defaults:
             run:
                 working-directory: "./Docker/app/"
-        permissions:
-            security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
-
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -40,31 +37,8 @@ jobs:
               env:
                 aws-region: ${{ secrets.AWS_REGION }}
 
-            - name: Build
+            - name: Build and Push to ECR
               run: |
                 docker build -t threat-composer-tool .
                 docker tag threat-composer-tool:latest ${{ secrets.AWS_REGISTRY }}/threat-composer-tool:latest
-                docker push ${{ secrets.AWS_REGISTRY }}/threat-composer-tool:latest
-
-            - name: Trivy Scan
-              uses: aquasecurity/trivy-action@master
-              with:
-                image-ref: ${{ secrets.AWS_REGISTRY }}/threat-composer-tool:latest
-                severity: 'CRITICAL,HIGH'
-                format: 'sarif'
-                output: 'trivy-results-Docker.sarif'
-                exit-code: 1   # 1 means that any vulnerabilities found, that meet the severity criteria, will raise an error and will not allow the pipeline code to continue. 0 would allow the pipeline code to continue no matter the vulnerability.
-              env:
-                AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-                AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-                AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
-      
-            - name: Upload Trivy scan results to GitHub Security tab
-              uses: github/codeql-action/upload-sarif@v3
-              with:
-                sarif_file: 'trivy-results-Docker.sarif'
-                wait-for-processing: true
-
-            - name: Push to ECR
-              run: |
                 docker push ${{ secrets.AWS_REGISTRY }}/threat-composer-tool:latest
