@@ -29,6 +29,7 @@ jobs:
 
             - name: TFlint Scan   #See this link for command flags https://github.com/terraform-linters/tflint
               run: |
+                touch tflint-results-terraform.sarif
                 tflint --recursive --format sarif > tflint-results-terraform.sarif
                 ls -l tflint-results-terraform.sarif
               continue-on-error: true
