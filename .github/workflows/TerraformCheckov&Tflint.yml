@@ -27,11 +27,10 @@ jobs:
               with: 
                 tflint_version: latest
 
-            - name: TFlint Scan   #See this link for command flags https://github.com/terraform-linters/tflint
+            - name: TFlint Scan   #See this link for command flags https://github.com/terraform-linters/tflint and https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/config.md#format
               run: |
                 touch tflint-results-terraform.sarif
-                tflint --recursive --format sarif > tflint-results-terraform.sarif
-                ls -l tflint-results-terraform.sarif
+                tflint --recursive --color
               continue-on-error: true
       
             - name: Checkov
