@@ -10,7 +10,7 @@ on:
 
 
 jobs:
-    All_In_One:
+    Docker:
         runs-on: ubuntu-latest
         defaults:
             run:
@@ -53,7 +53,7 @@ jobs:
                 severity: 'CRITICAL,HIGH'
                 format: 'sarif'
                 output: 'trivy-results-Docker.sarif'
-                exit-code: 0
+                exit-code: 1
               env:
                 AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
                 AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
