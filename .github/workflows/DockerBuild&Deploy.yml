@@ -53,7 +53,7 @@ jobs:
                 severity: 'CRITICAL,HIGH'
                 format: 'sarif'
                 output: 'trivy-results-Docker.sarif'
-                exit-code: 0   # 1 means that any vulnerabilities found, that meet the severity criteria, will raise an error and will not allow the pipeline code to continue. 0 would allow the pipeline code to continue no matter the vulnerability.
+                exit-code: 1   # 1 means that any vulnerabilities found, that meet the severity criteria, will raise an error and will not allow the pipeline code to continue. 0 would allow the pipeline code to continue no matter the vulnerability.
               env:
                 AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
                 AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
