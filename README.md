@@ -8,8 +8,6 @@ This project automates the deployment of the **Threat Composer App** using **AWS
 
 The **Threat Composer App** is a containerised Node.js application deployed on **AWS ECS Fargate**. The deployment process is fully automated using **CI/CD pipeline** to handle Docker image building, security scans, and deployment to AWS through **Terraform**.
 
-<br>
-
 ### Key Components:
 
 - **Dockerisation**: The app is containerised using a **Dockerfile** for consistency across environments.
@@ -100,3 +98,17 @@ The deployment process is fully automated via GitHub Actions:
 <br>
 
 To trigger any of these workflows, go to **GitHub Actions** and manually run the desired workflow.
+
+
+|Here’s what it will look like:|
+|-------|
+|Domain Page:|
+| ![App1](https://raw.githubusercontent.com/JunedConnect/lab-ecs-project/main/images/Container%20Domain%201.png) |
+|SSL Certificate:|
+| ![App1](https://raw.githubusercontent.com/JunedConnect/lab-ecs-project/main/images/Container%20Domain%202.png) |
+|CI/CD Docker Build & Push:|
+| ![CICD1](https://raw.githubusercontent.com/JunedConnect/lab-ecs-project/main/images/CICD%20Pipeline%20-%20Docker%20Build%20%26%20Push.png) |
+|CI/CD Terraform Apply:|
+| ![CICD2](https://raw.githubusercontent.com/JunedConnect/lab-ecs-project/main/images/CICD%20Pipeline%20-%20Terraform%20Apply.png) |
+|CI/CD Terraform Destroy:|
+| ![CICD3](https://raw.githubusercontent.com/JunedConnect/lab-ecs-project/main/images/CICD%20Pipeline%20-%20Terraform%20Destroy.png) |
