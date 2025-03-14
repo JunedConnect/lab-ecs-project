@@ -52,7 +52,7 @@ jobs:
               uses: bridgecrewio/checkov-action@master
               with:
                 framework: terraform
-                soft_fail: true
+                soft_fail: false   #Soft fail on means that the pipeline will stil continue to run regardless if a vulnerability was detected. Soft fail off would be the opposite where a detected vulnerability will cause the pipeline to stop running
                 output_format: cli,sarif
                 output_file_path: checkov-results-terraform.sarif
                 
