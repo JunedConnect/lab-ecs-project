@@ -13,8 +13,8 @@ jobs:
     terraformapply:
         runs-on: ubuntu-latest
         defaults:
-          run:
-            working-directory: "./Terraform/"
+            run:
+                working-directory: "./Terraform/"
         permissions:
             security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
     
