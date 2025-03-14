@@ -30,7 +30,7 @@ jobs:
             - name: TFlint Scan
               run: |
                 tflint --init
-                tflint --recursive
+                tflint --recursive --format sarif --output tflint-results-terraform.sarif
               continue-on-error: true
 
             - name: Upload TFLint scan results to GitHub Security tab
