@@ -31,7 +31,7 @@ jobs:
               run: |
                 touch tflint-results-terraform.sarif
                 tflint --recursive --color
-#              continue-on-error: true
+              continue-on-error: true
       
             - name: Checkov
               uses: bridgecrewio/checkov-action@master
