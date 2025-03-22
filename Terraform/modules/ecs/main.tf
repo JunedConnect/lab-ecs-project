@@ -38,7 +38,7 @@ resource "aws_ecs_task_definition" "TCD-TD" {
   container_definitions = jsonencode([
     {
       name      = "container"
-      image     = "677276074604.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-tool:latest"
+      image     = var.ecs_container_image
       cpu       = var.ecs_container_cpu
       memory    = var.ecs_container_memory
       essential = true
