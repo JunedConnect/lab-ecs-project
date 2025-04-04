@@ -88,7 +88,7 @@ The deployment process is fully automated via GitHub Actions:
     
 2. **Terraform Apply** (`TerraformApply.yml`):
     - Initialises and applies the Terraform configuration.
-    - Provisions the necessary AWS resources (ECS, ALB, Route 53, Security Groups).
+    - Provisions the necessary AWS resources (ECS, ALB, Route 53, VPC, Security Groups).
     - Runs **TFLint** to validate Terraform syntax and best practices.
     - Runs **Checkov** to scan for security issues in Terraform code.
     
