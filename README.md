@@ -51,11 +51,11 @@ The **Threat Composer App** is a containerised Node.js application deployed on *
         └── TerraformDestroy.yml
 ```
 
-- **Docker Files**:
+- **Docker Files** (`Docker/`):
     - **Dockerfile**: Defines the app's containerised environment.
     - **docker-compose.yml**: Manages the app's container configuration for local development.
 
-- **Terraform Files**:
+- **Terraform Files** (`Terraform/`):
     - **modules/alb**: Sets up the **Application Load Balancer** (ALB).
     - **modules/ecs**: Configures the **ECS Cluster** and **Fargate service**.
     - **modules/network**: Provisions **Security Groups**, **VPC**, and **Subnets**.
@@ -68,12 +68,16 @@ The **Threat Composer App** is a containerised Node.js application deployed on *
     - **DockerBuild&Deploy.yml**:
         - Builds and pushes the Docker image to **ECR**.
         - Runs **Trivy** to scan the image for vulnerabilities.
+
+    - **TerraformPlan.yml**:
+        - Previews the Terraform configuration to provision AWS resources.
+        - Runs **TFLint** and **Checkov** for security and syntax checks.
     
     - **TerraformApply.yml**:
         - Applies the Terraform configuration to provision AWS resources.
-        - Runs **TFLint** and **Checkov** for security and syntax checks.
     
-    - **TerraformDestroy.yml**: Destroys Terraform-managed infrastructure.
+    - **TerraformDestroy.yml**:
+        - Destroys Terraform-managed infrastructure.
 
 <br>
 
@@ -86,13 +90,17 @@ The deployment process is fully automated via GitHub Actions:
     - Runs **Trivy** to scan for critical vulnerabilities before pushing to ECR.
     - Pushes the image to **Amazon ECR**.
     
-2. **Terraform Apply** (`TerraformApply.yml`):
-    - Initialises and applies the Terraform configuration.
+2. **Terraform Build** (`TerraformBuild.yml`):
+    - Initialises the Terraform configuration.
     - Provisions the necessary AWS resources (ECS, ALB, Route 53, VPC, Security Groups).
     - Runs **TFLint** to validate Terraform syntax and best practices.
     - Runs **Checkov** to scan for security issues in Terraform code.
+
+3. **Terraform Apply** (`TerraformApply.yml`):
+    - Initialises the Terraform directory.
+    - Provisions the necessary AWS resources (ECS, ALB, Route 53, VPC, Security Groups).
     
-3. **Terraform Destroy** (`TerraformDestroy.yml`):
+4. **Terraform Destroy** (`TerraformDestroy.yml`):
     - Destroys all Terraform-managed resources when necessary.
 
 <br>
