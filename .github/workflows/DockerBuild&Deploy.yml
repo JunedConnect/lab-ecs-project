@@ -44,12 +44,11 @@ jobs:
               run: |
                 docker build -t threat-composer-tool .
                 docker tag threat-composer-tool:latest ${{ secrets.AWS_REGISTRY }}/threat-composer-tool:latest
-                docker push ${{ secrets.AWS_REGISTRY }}/threat-composer-tool:latest
 
             - name: Trivy Scan
               uses: aquasecurity/trivy-action@master
               with:
-                image-ref: ${{ secrets.AWS_REGISTRY }}/threat-composer-tool:latest
+                image-ref: threat-composer-tool:latest
                 severity: 'CRITICAL,HIGH'
                 format: 'sarif'
                 output: 'trivy-results-Docker.sarif'
