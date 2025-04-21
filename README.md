@@ -47,6 +47,7 @@ The **Threat Composer App** is a containerised Node.js application deployed on *
 └── .github
     └── workflows
         ├── DockerBuild&Deploy.yml
+        ├── TerraformPlan.yml
         ├── TerraformApply.yml
         └── TerraformDestroy.yml
 ```
